@@ -1,5 +1,5 @@
 import React from 'react';
-import Picture from './components/Picture';
+import Gallery from './components/Gallery';
 import './App.css';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <Picture />
+      <Gallery />
     </div>
   );
 }
