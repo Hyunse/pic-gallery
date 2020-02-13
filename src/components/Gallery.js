@@ -4,8 +4,10 @@ import Picture from './Picture';
 import '../css/Gallery.css';
 
 class Gallery extends Component {
+  
   constructor(props) {
     super(props);
+
     this.state = {
       unsplash: '',
       images: []
@@ -24,8 +26,6 @@ class Gallery extends Component {
       .then(toJson)
       .then((json) => {
         let imgArray = this.chunkArray(json.results, 3);
-
-        console.log(imgArray);
         this.setState({ images: imgArray });
       });
   }
@@ -40,19 +40,6 @@ class Gallery extends Component {
     return results;
   };
 
-  // getColumn() {
-  //   this.state.images.map((imgArr, i) => {
-  //     return <div className="column">{this.getPicture(imgArr)}</div>;
-  //   });
-  // }
-
-  // getPicture(imgArr) {
-  //   console.log('imgArr', imgArr);
-  //   imgArr.map((img, i) => {
-  //     return <Picture src={img.urls.small} key={i} />;
-  //   });
-  // }
-
   render() {
     return (
       <div>
@@ -62,7 +49,13 @@ class Gallery extends Component {
               return (
                 <div className="column" key={key}>
                   {imgArr.map((img, i) => {
-                    return <Picture src={img.urls.regular} key={i} />;
+                    return (
+                      <Picture
+                        src={img.urls.regular}
+                        user={img.user}
+                        key={i}
+                      />
+                    );
                   })}
                 </div>
               );
