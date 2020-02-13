@@ -11,6 +11,10 @@ class Picture extends Component {
     };
   }
 
+  submitInfo = () => {
+    this.props.onClick(this.props.src, this.props.user);
+  }
+
   onMouseOver = () => {
     this.setState({ hover: true });
   }
@@ -26,6 +30,7 @@ class Picture extends Component {
           href="#none"
           onMouseOver={this.onMouseOver}
           onMouseLeave={this.onMouseLeave}
+          onClick={this.submitInfo}
         >
           <img
             className="unsplash-img"

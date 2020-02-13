@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import Unsplash, { toJson } from 'unsplash-js';
 import Picture from './Picture';
+import ImageModal from './ImageModal';
 import '../css/Gallery.css';
 
 class Gallery extends Component {
-  
   constructor(props) {
     super(props);
 
     this.state = {
       unsplash: '',
-      images: []
+      images: [],
+      modalShow: false,
+      modalSrc: '',
+      modalUser: null
     };
   }
 
@@ -40,6 +43,14 @@ class Gallery extends Component {
     return results;
   };
 
+  onClickPic = (src, user) => {
+    this.setState({ modalSrc: src, modalUser: user, modalShow: true });
+  };
+
+  onClickCloseModal = () => {
+    this.setState({ modalShow: false});
+  }
+
   render() {
     return (
       <div>
@@ -54,6 +65,7 @@ class Gallery extends Component {
                         src={img.urls.regular}
                         user={img.user}
                         key={i}
+                        onClick={this.onClickPic}
                       />
                     );
                   })}
@@ -62,6 +74,12 @@ class Gallery extends Component {
             })}
           </div>
         </div>
+        <ImageModal
+          modalShow={this.state.modalShow}
+          modalUser={this.state.modalUser}
+          modalSrc={this.state.modalSrc}
+          onClickCloseModal={this.onClickCloseModal}
+        />
       </div>
     );
   }

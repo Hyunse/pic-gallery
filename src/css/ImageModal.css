@@ -1,0 +1,14 @@
+.image-modal-portal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: zoom-out;
+  z-index: 1;
+}
+
+.image-modal {
+  display: flex;
+  padding-top: 32px;
+  padding-right: 70px;
+  padding-left: 70px;
+  cursor: default;
+}
