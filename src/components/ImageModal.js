@@ -6,7 +6,8 @@ class ImageModal extends Component {
     super(props);
 
     this.state = {
-      isSmall: true
+      isSmall: true,
+      imgHover: false
     };
   }
 
@@ -18,6 +19,14 @@ class ImageModal extends Component {
     } else {
       this.setState({ isSmall: true });
     }
+  };
+
+  onMouseOverImg = () => {
+    this.setState({ imgHover: true });
+  };
+
+  onMouseLeaveImg = () => {
+    this.setState({ imgHover: false });
   };
 
   render() {
@@ -63,7 +72,13 @@ class ImageModal extends Component {
             </div>
             <div className="image-modal-body">
               <div>
-                <a href="#none" onClick={this.changeModalImg}>
+                <a
+                  href="#none"
+                  onClick={this.changeModalImg}
+                  onMouseOver={this.onMouseOverImg}
+                  onMouseLeave={this.onMouseLeaveImg}
+                >
+                  <i className={`fas fa-expand ${this.state.imgHover === false ? 'hidden' : 'visible'}`}></i>
                   <img
                     src={
                       this.state.isSmall === true

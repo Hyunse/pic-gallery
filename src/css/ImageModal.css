@@ -51,6 +51,18 @@
   padding: 15px 15px;
 }
 
-.image-modal-body > div > img {
+.image-modal-body > div > a {
+  display: inline-block;
+  position: relative;
+}
+
+.image-modal-body > div > a > i {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2;
+}
+
+.image-modal-body > div > a > img {
   margin: 0 auto;
 }
