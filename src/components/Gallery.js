@@ -13,7 +13,8 @@ class Gallery extends Component {
       images: [],
       modalShow: false,
       modalSrc: '',
-      modalUser: null
+      modalUser: null,
+      overflowBlock: false
     };
   }
 
@@ -44,12 +45,18 @@ class Gallery extends Component {
   };
 
   onClickPic = (src, user) => {
-    this.setState({ modalSrc: src, modalUser: user, modalShow: true });
+    this.setState({
+      modalSrc: src,
+      modalUser: user
+    });
+
+    document.body.classList.add('body-modal-open');
   };
 
   onClickCloseModal = () => {
-    this.setState({ modalShow: false});
-  }
+    this.setState({ modalShow: false });
+    document.body.classList.remove('body-modal-open');
+  };
 
   render() {
     return (

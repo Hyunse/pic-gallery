@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../css/ImageModal.css'
 
 class ImageModal extends Component {
   constructor({ props }) {
