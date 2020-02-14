@@ -14,7 +14,7 @@ class Gallery extends Component {
       modalShow: false,
       modalSrc: '',
       modalUser: null,
-      overflowBlock: false
+      modalImg: null
     };
   }
 
@@ -26,7 +26,7 @@ class Gallery extends Component {
     });
 
     unsplash.search
-      .photos('cats', 1, 9)
+      .photos('puppy', 1, 9)
       .then(toJson)
       .then((json) => {
         let imgArray = this.chunkArray(json.results, 3);
@@ -44,11 +44,15 @@ class Gallery extends Component {
     return results;
   };
 
-  onClickPic = (src, user) => {
+  onClickPic = (src, user, img) => {
     this.setState({
-      modalSrc: src,
-      modalUser: user
+      modalSrc: src.small,
+      modalUser: user,
+      modalShow: true,
+      modalImg: img
     });
+
+    console.log(img);
 
     document.body.classList.add('body-modal-open');
   };
@@ -60,7 +64,8 @@ class Gallery extends Component {
 
   render() {
     return (
-      <div>
+      <div
+      >
         <div className="container">
           <div className="row">
             {this.state.images.map((imgArr, key) => {
@@ -69,7 +74,8 @@ class Gallery extends Component {
                   {imgArr.map((img, i) => {
                     return (
                       <Picture
-                        src={img.urls.regular}
+                        img={img}
+                        src={img.urls}
                         user={img.user}
                         key={i}
                         onClick={this.onClickPic}
@@ -85,6 +91,7 @@ class Gallery extends Component {
           modalShow={this.state.modalShow}
           modalUser={this.state.modalUser}
           modalSrc={this.state.modalSrc}
+          modalImg={this.state.modalImg}
           onClickCloseModal={this.onClickCloseModal}
         />
       </div>

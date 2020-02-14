@@ -12,7 +12,7 @@ class Picture extends Component {
   }
 
   submitInfo = () => {
-    this.props.onClick(this.props.src, this.props.user);
+    this.props.onClick(this.props.src, this.props.user, this.props.img);
   }
 
   onMouseOver = () => {
@@ -34,7 +34,7 @@ class Picture extends Component {
         >
           <img
             className="unsplash-img"
-            src={this.props.src}
+            src={this.props.src.regular}
             alt=""
             key={this.props.key}
           />

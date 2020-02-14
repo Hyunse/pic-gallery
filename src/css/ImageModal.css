@@ -17,3 +17,40 @@
   padding-left: 70px;
   cursor: default;
 }
+
+.image-modal > div {
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.image-modal-close > button {
+  font-size: 25px;
+  color: white;
+  border: 0; 
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.image-modal-close > button:focus {
+  outline: 0;
+}
+
+.image-modal-header {
+  padding-top: 15px;
+}
+
+.image-modal-body > div {
+  text-align: center;
+  padding: 15px 15px;
+}
+
+.image-modal-body > div > img {
+  margin: 0 auto;
+}
