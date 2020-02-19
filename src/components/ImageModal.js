@@ -69,6 +69,14 @@ class ImageModal extends Component {
                     : this.props.modalUser.username}
                 </div>
               </span>
+              <div
+                className="image-buttons image-buttons-top"
+                style={{ position:'relative', display: 'inline-flex', top: 'initial' }}
+              >
+                <button className="fas fa-heart"></button>
+                <button className="fas fa-plus"> Collect</button>
+                <button className="fas fa-download"> Download</button>
+              </div>
             </div>
             <div className="image-modal-body">
               <div>
@@ -78,7 +86,11 @@ class ImageModal extends Component {
                   onMouseOver={this.onMouseOverImg}
                   onMouseLeave={this.onMouseLeaveImg}
                 >
-                  <i className={`fas fa-expand ${this.state.imgHover === false ? 'hidden' : 'visible'}`}></i>
+                  <i
+                    className={`fas fa-expand ${
+                      this.state.imgHover === false ? 'hidden' : 'visible'
+                    }`}
+                  ></i>
                   <img
                     src={
                       this.state.isSmall === true

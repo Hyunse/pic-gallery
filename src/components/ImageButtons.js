@@ -1,7 +1,17 @@
 import React from 'react';
 import '../css/ImageButtons.css';
 
-const ImageButtons = ({ user, onMouseOver }) => {
+const ImageButtons = ({ user, onMouseOver = false }) => {
+
+  if(!user) {
+    user = {
+      profile_image: {
+        large: ''
+      },
+      username: ''
+    }
+  }
+
   return (
     <div
       className={`image-buttons-container ${

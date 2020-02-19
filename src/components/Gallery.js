@@ -52,8 +52,6 @@ class Gallery extends Component {
       modalImg: img
     });
 
-    console.log(img);
-
     document.body.classList.add('body-modal-open');
   };
 

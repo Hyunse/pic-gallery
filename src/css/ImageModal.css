@@ -33,7 +33,7 @@
 .image-modal-close > button {
   font-size: 25px;
   color: white;
-  border: 0; 
+  border: 0;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
 }
@@ -43,7 +43,13 @@
 }
 
 .image-modal-header {
+  display: flex;
+  justify-content: space-between;
   padding-top: 15px;
+}
+
+.image-modal-header > button {
+  border-color: #d1d1d1;
 }
 
 .image-modal-body > div {
