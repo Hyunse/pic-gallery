@@ -1,5 +1,5 @@
 import React from 'react';
-import Gallery from './components/Gallery';
+import Home from './components/Home';
 import './App.css';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <Gallery />
+      <Home />
     </div>
   );
 }
