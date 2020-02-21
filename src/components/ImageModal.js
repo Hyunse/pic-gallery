@@ -39,7 +39,10 @@ class ImageModal extends Component {
         <div className="image-modal-close">
           <button
             className="fas fa-times"
-            onClick={this.props.onClickCloseModal}
+            onClick={() => {
+              this.setState({isSmall: true});
+              this.props.onClickCloseModal()
+            }}
           ></button>
         </div>
         <div className="image-modal">
@@ -85,6 +88,7 @@ class ImageModal extends Component {
                   onClick={this.changeModalImg}
                   onMouseOver={this.onMouseOverImg}
                   onMouseLeave={this.onMouseLeaveImg}
+                  style={{active: 'none'}}
                 >
                   <i
                     className={`fas fa-expand ${

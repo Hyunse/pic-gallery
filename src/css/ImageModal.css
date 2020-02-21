@@ -60,6 +60,7 @@
 .image-modal-body > div > a {
   display: inline-block;
   position: relative;
+  font-size: 25px;
 }
 
 .image-modal-body > div > a > i {
