@@ -9,7 +9,6 @@ class Gallery extends Component {
     super(props);
 
     this.state = {
-      unsplash: '',
       images: [],
       modalShow: false,
       modalSrc: '',
@@ -19,6 +18,14 @@ class Gallery extends Component {
   }
 
   componentDidMount() {
+    this.searchUnsplashAPI(this.props.keyword);
+  }
+
+  componentWillReceiveProps({keyword}) {
+    this.searchUnsplashAPI(keyword);
+  }
+
+  searchUnsplashAPI(keyword) {
     let unsplash = new Unsplash({
       accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
       secret: process.env.REACT_APP_UNSPLASH_SCREAT_KEY,
@@ -26,12 +33,12 @@ class Gallery extends Component {
     });
 
     unsplash.search
-      .photos('puppy', 1, 9)
-      .then(toJson)
-      .then((json) => {
-        let imgArray = this.chunkArray(json.results, 3);
-        this.setState({ images: imgArray });
-      });
+    .photos(keyword, 1, 9)
+    .then(toJson)
+    .then((json) => {
+      let imgArray = this.chunkArray(json.results, 3);
+      this.setState({ images: imgArray });
+    });
   }
 
   chunkArray = (myArray, chunk_size) => {

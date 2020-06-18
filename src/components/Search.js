@@ -18,6 +18,7 @@ class Search extends Component {
               type="text"
               className="search-bar search-bar-text"
               placeholder="Search Images"
+              onKeyUp={this.props.onKeypress}
             />
           </div>
         </div>
