@@ -13,7 +13,7 @@ class Gallery extends Component {
       modalShow: false,
       modalSrc: '',
       modalUser: null,
-      modalImg: null
+      modalImg: null,
     };
   }
 
@@ -21,7 +21,7 @@ class Gallery extends Component {
     this.searchUnsplashAPI(this.props.keyword);
   }
 
-  componentWillReceiveProps({keyword}) {
+  componentWillReceiveProps({ keyword }) {
     this.searchUnsplashAPI(keyword);
   }
 
@@ -30,16 +30,18 @@ class Gallery extends Component {
       accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
       secret: process.env.REACT_APP_UNSPLASH_SCREAT_KEY,
       // callbackUrl: process.env.REACT_APP_UNSPLASH_CALL_BACK_URL_DEV
-      callbackUrl: process.env.REACT_APP_UNSPLASH_CALL_BACK_URL_PRD
+      callbackUrl: process.env.REACT_APP_UNSPLASH_CALL_BACK_URL_PRD,
     });
 
     unsplash.search
-    .photos(keyword, 1, 9)
-    .then(toJson)
-    .then((json) => {
-      let imgArray = this.chunkArray(json.results, 3);
-      this.setState({ images: imgArray });
-    });
+      .photos(keyword, 1, 9)
+      .then(toJson)
+      .then((json) => {
+        if (json.results) {
+          let imgArray = this.chunkArray(json.results, 3);
+          this.setState({ images: imgArray });
+        }
+      });
   }
 
   chunkArray = (myArray, chunk_size) => {
@@ -57,7 +59,7 @@ class Gallery extends Component {
       modalSrc: src.small,
       modalUser: user,
       modalShow: true,
-      modalImg: img
+      modalImg: img,
     });
 
     document.body.classList.add('body-modal-open');
@@ -70,8 +72,7 @@ class Gallery extends Component {
 
   render() {
     return (
-      <div
-      >
+      <div>
         <div className="container">
           <div className="row">
             {this.state.images.map((imgArr, key) => {
