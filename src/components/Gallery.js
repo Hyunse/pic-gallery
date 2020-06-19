@@ -29,8 +29,7 @@ class Gallery extends Component {
     let unsplash = new Unsplash({
       accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
       secret: process.env.REACT_APP_UNSPLASH_SCREAT_KEY,
-      // callbackUrl: process.env.REACT_APP_UNSPLASH_CALL_BACK_URL_DEV
-      callbackUrl: process.env.REACT_APP_UNSPLASH_CALL_BACK_URL_PRD,
+      callbackUrl: process.env.REACT_APP_UNSPLASH_CALL_BACK_URL,
     });
 
     unsplash.search
