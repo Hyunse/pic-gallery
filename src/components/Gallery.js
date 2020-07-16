@@ -16,7 +16,6 @@ class Gallery extends Component {
       modalSrc: '',
       modalUser: null,
       modalImg: null,
-      originArray: [],
     };
   }
 
@@ -27,6 +26,17 @@ class Gallery extends Component {
       this.state.perPage
     );
     window.addEventListener('scroll', this.handleScroll.bind(this));
+  }
+
+  componentDidUpdate({ keyword }) {
+    if (keyword !== this.props.keyword) {
+      this.initState();
+      this.searchUnsplashAPI(this.props.keyword, this.state.page, this.state.perPage);
+    }
+  }
+
+  initState() {
+    this.setState({page: 1, perPage: 9, images: []});
   }
 
   componentWillMount() {
