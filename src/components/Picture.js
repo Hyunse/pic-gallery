@@ -36,7 +36,6 @@ class Picture extends Component {
             className="unsplash-img"
             src={this.props.src.regular}
             alt=""
-            key={this.props.key}
           />
           <ImageButtons user={this.props.user} onMouseOver={this.state.hover}/>
         </a>

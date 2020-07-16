@@ -9,23 +9,58 @@ class Gallery extends Component {
     super(props);
 
     this.state = {
+      page: 1,
+      perPage: 9,
       images: [],
       modalShow: false,
       modalSrc: '',
       modalUser: null,
       modalImg: null,
+      originArray: [],
     };
   }
 
   componentDidMount() {
-    this.searchUnsplashAPI(this.props.keyword);
+    this.searchUnsplashAPI(
+      this.props.keyword,
+      this.state.page,
+      this.state.perPage
+    );
+    window.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
-  componentWillReceiveProps({ keyword }) {
-    this.searchUnsplashAPI(keyword);
+  componentWillMount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
-  searchUnsplashAPI(keyword) {
+  handleScroll() {
+    const windowHeight =
+      'innerHeight' in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    const windowBottom = windowHeight + window.pageYOffset;
+
+    if (windowBottom >= docHeight - 3) {
+      this.setState({ page: this.state.page + 1 });
+      this.searchUnsplashAPI(
+        this.props.keyword,
+        this.state.page,
+        this.state.perPage
+      );
+    } else {
+    }
+  }
+
+  searchUnsplashAPI(keyword, page, perPage) {
     let unsplash = new Unsplash({
       accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
       secret: process.env.REACT_APP_UNSPLASH_SCREAT_KEY,
@@ -33,12 +68,20 @@ class Gallery extends Component {
     });
 
     unsplash.search
-      .photos(keyword, 1, 9)
+      .photos(keyword, page, perPage)
       .then(toJson)
       .then((json) => {
         if (json.results) {
-          let imgArray = this.chunkArray(json.results, 3);
-          this.setState({ images: imgArray });
+          let searchImgArray = this.chunkArray(json.results, 3);
+
+          if (this.state.images.length > 0) {
+            searchImgArray = this.state.images.map((imgArr, index) => {
+              return [...imgArr, ...searchImgArray[index]];
+            });
+            this.setState({ images: searchImgArray });
+          } else {
+            this.setState({ images: searchImgArray });
+          }
         }
       });
   }
@@ -74,16 +117,16 @@ class Gallery extends Component {
       <div>
         <div className="container">
           <div className="row">
-            {this.state.images.map((imgArr, key) => {
+            {this.state.images.map((imgArr, index) => {
               return (
-                <div className="column" key={key}>
+                <div className="column" key={index}>
                   {imgArr.map((img, i) => {
                     return (
                       <Picture
                         img={img}
                         src={img.urls}
                         user={img.user}
-                        key={i}
+                        key={img.id}
                         onClick={this.onClickPic}
                       />
                     );
