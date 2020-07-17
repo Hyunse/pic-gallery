@@ -8,3 +8,20 @@
   padding-bottom: 15px;
   cursor: zoom-in;
 }
+
+.show-up {
+  animation-name: fadeInBottom;
+  animation-duration: 2.5s;
+  animation-fill-mode: both;
+  transform: translateY(0%);
+}
+
+@keyframes fadeInBottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -63,7 +63,7 @@ class Gallery extends Component {
     );
     const windowBottom = windowHeight + window.pageYOffset;
 
-    if (windowBottom >= docHeight - 600) {
+    if (windowBottom >= docHeight - 200) {
       this.setState({ page: this.state.page + 1 });
       this.searchUnsplashAPI(
         this.props.keyword,

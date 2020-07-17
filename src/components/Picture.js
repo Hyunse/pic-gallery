@@ -25,7 +25,7 @@ class Picture extends Component {
 
   render() {
     return (
-      <div className="picture">
+      <div className="picture show-up">
         <a
           href="#none"
           onMouseOver={this.onMouseOver}
