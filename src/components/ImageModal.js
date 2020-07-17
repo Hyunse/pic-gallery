@@ -7,7 +7,7 @@ class ImageModal extends Component {
 
     this.state = {
       isSmall: true,
-      imgHover: false
+      imgHover: false,
     };
   }
 
@@ -29,6 +29,10 @@ class ImageModal extends Component {
     this.setState({ imgHover: false });
   };
 
+  clickDownload = () => {
+    this.props.modalDownload(this.props.modalDownloadlink);
+  }
+
   render() {
     return (
       <div
@@ -40,8 +44,8 @@ class ImageModal extends Component {
           <button
             className="fas fa-times"
             onClick={() => {
-              this.setState({isSmall: true});
-              this.props.onClickCloseModal()
+              this.setState({ isSmall: true });
+              this.props.onClickCloseModal();
             }}
           ></button>
         </div>
@@ -74,11 +78,15 @@ class ImageModal extends Component {
               </span>
               <div
                 className="image-buttons image-buttons-top"
-                style={{ position:'relative', display: 'inline-flex', top: 'initial' }}
+                style={{
+                  position: 'relative',
+                  display: 'inline-flex',
+                  top: 'initial',
+                }}
               >
                 <button className="fas fa-heart"></button>
                 <button className="fas fa-plus"> Collect</button>
-                <button className="fas fa-download"> Download</button>
+                <button className="fas fa-download" onClick={this.clickDownload}> Download</button>
               </div>
             </div>
             <div className="image-modal-body">
@@ -88,7 +96,7 @@ class ImageModal extends Component {
                   onClick={this.changeModalImg}
                   onMouseOver={this.onMouseOverImg}
                   onMouseLeave={this.onMouseLeaveImg}
-                  style={{active: 'none'}}
+                  style={{ active: 'none' }}
                 >
                   <i
                     className={`fas fa-expand ${

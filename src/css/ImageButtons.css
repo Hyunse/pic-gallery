@@ -4,6 +4,7 @@
 
 .image-buttons-container {
   max-width: 1280px;
+  z-index:2;
 }
 
 .image-shadow {
@@ -56,6 +57,11 @@
   border: 10px solid hsla(0, 0%, 100%, 0.9);
   background-color: hsla(0, 0%, 100%, 1);
   cursor: pointer;
+}
+
+.image-buttons button:hover {
+  color: #111;
+  background-color: #fff;
 }
 
 .image-buttons button:hover {

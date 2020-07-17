@@ -10,9 +10,10 @@ class Search extends Component {
   render() {
     return (
       <div className="search-container">
+        <div id="background"></div>
         <img src={spaceImg} alt="search-back" />
         <div className="search-bar-area">
-          <span>Unsplash API</span>
+          <span>My Unsplash API</span>
           <div>
             <input
               type="text"

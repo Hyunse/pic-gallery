@@ -31,12 +31,16 @@ class Gallery extends Component {
   componentDidUpdate({ keyword }) {
     if (keyword !== this.props.keyword) {
       this.initState();
-      this.searchUnsplashAPI(this.props.keyword, this.state.page, this.state.perPage);
+      this.searchUnsplashAPI(
+        this.props.keyword,
+        this.state.page,
+        this.state.perPage
+      );
     }
   }
 
   initState() {
-    this.setState({page: 1, perPage: 9, images: []});
+    this.setState({ page: 1, perPage: 9, images: [] });
   }
 
   componentWillMount() {
@@ -92,6 +96,8 @@ class Gallery extends Component {
           } else {
             this.setState({ images: searchImgArray });
           }
+
+          console.log(searchImgArray);
         }
       });
   }
@@ -106,12 +112,14 @@ class Gallery extends Component {
     return results;
   };
 
-  onClickPic = (src, user, img) => {
+  onClickPic = (src, user, img, download, link) => {
     this.setState({
       modalSrc: src.small,
       modalUser: user,
       modalShow: true,
       modalImg: img,
+      modalDownload: download,
+      modalDownloadlink: link
     });
 
     document.body.classList.add('body-modal-open');
@@ -121,6 +129,10 @@ class Gallery extends Component {
     this.setState({ modalShow: false });
     document.body.classList.remove('body-modal-open');
   };
+
+  download = (link) => {
+    window.open(link, '_blank');
+  }
 
   render() {
     return (
@@ -135,6 +147,8 @@ class Gallery extends Component {
                       <Picture
                         img={img}
                         src={img.urls}
+                        link={img.links.download}
+                        download={this.download}
                         user={img.user}
                         key={img.id}
                         onClick={this.onClickPic}
@@ -150,7 +164,9 @@ class Gallery extends Component {
           modalShow={this.state.modalShow}
           modalUser={this.state.modalUser}
           modalSrc={this.state.modalSrc}
+          modalDownloadlink={this.state.modalDownloadlink}
           modalImg={this.state.modalImg}
+          modalDownload={this.state.modalDownload}
           onClickCloseModal={this.onClickCloseModal}
         />
       </div>

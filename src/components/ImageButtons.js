@@ -1,16 +1,20 @@
 import React from 'react';
 import '../css/ImageButtons.css';
 
-const ImageButtons = ({ user, onMouseOver = false }) => {
-
-  if(!user) {
+const ImageButtons = ({ user, onMouseOver = false, link, download }) => {
+  if (!user) {
     user = {
       profile_image: {
-        large: ''
+        large: '',
       },
-      username: ''
-    }
+      username: '',
+    };
   }
+
+  const clickDownload = (e) => {
+    e.stopPropagation();
+    download(link);
+  };
 
   return (
     <div
@@ -30,7 +34,7 @@ const ImageButtons = ({ user, onMouseOver = false }) => {
           </div>
           <div className="image-buttons-profile-username">{user.username}</div>
         </span>
-        <button className="fas fa-arrow-down"></button>
+        <button onClick={clickDownload} className="fas fa-arrow-down"></button>
       </div>
     </div>
   );
