@@ -1,7 +1,7 @@
-# PIC-MAP
+# Pic-gallery
 
-practice react with picture api
+piture gallery using Unsplash API
 
 # URL
 
-https://hyunse.github.io/pic-map/
+https://hyunse.github.io/pic-gallery/
