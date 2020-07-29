@@ -96,8 +96,6 @@ class Gallery extends Component {
           } else {
             this.setState({ images: searchImgArray });
           }
-
-          console.log(searchImgArray);
         }
       });
   }
