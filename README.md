@@ -19,4 +19,4 @@ This project is **deployed** at: https://hyunse.github.io/pic-gallery/
 
 # Demo
 
-![pic](https://hyunse.github.com/pic-gallery/pic.gif)
+![demo](./pic.gif)
