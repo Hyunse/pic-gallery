@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../css/Search.css';
-import spaceImg from '../resource/space.jpg';
+// import spaceImg from '../resource/space.jpg';
 
 class Search extends Component {
   constructor(props) {
@@ -10,11 +10,12 @@ class Search extends Component {
   render() {
     return (
       <div className="search-container">
-        <div id="background"></div>
-        <img src={spaceImg} alt="search-back" />
+        {/* <img src={spaceImg} alt="search-back" /> */}
         <div className="search-bar-area">
-          <span>My Unsplash API</span>
-          <div>
+          <div className="title">
+            <span>Picture Gallery</span>
+          </div>
+          <div className="search-bar-input-box">
             <input
               type="text"
               className="search-bar search-bar-text"

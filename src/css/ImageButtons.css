@@ -51,6 +51,7 @@
 }
 
 .image-buttons button {
+  font-size: 0.833rem;
   color: #767676;
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);

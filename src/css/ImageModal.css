@@ -71,5 +71,6 @@
 }
 
 .image-modal-body > div > a > img {
+  width:100%;
   margin: 0 auto;
 }
