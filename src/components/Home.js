@@ -5,23 +5,23 @@ import Gallery from './Gallery';
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      keyword: 'puppy'
-     };
+    this.state = {
+      keyword: 'puppy',
+    };
   }
 
   onKeypress = (e) => {
     const keyword = e.target.value;
-    if(e.key === 'Enter') {
-      
+
+    if (e.key === 'Enter' && keyword !== this.state.keyword) {
       this.setState({ keyword });
     }
-  }
+  };
 
   render() {
     return (
       <div>
-        <Search onKeypress={this.onKeypress}/>
+        <Search onKeypress={this.onKeypress} />
         <Gallery keyword={this.state.keyword} />
       </div>
     );

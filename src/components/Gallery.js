@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Unsplash, { toJson } from 'unsplash-js';
 import Picture from './Picture';
 import ImageModal from './ImageModal';
+import ArrayUtils from '../utils/array';
 import '../css/Gallery.css';
 
 class Gallery extends Component {
@@ -12,41 +13,56 @@ class Gallery extends Component {
       page: 1,
       perPage: 9,
       images: [],
+      originalArray: [],
       modalShow: false,
       modalSrc: '',
       modalUser: null,
       modalImg: null,
+      chunkSize: 3,
     };
-  }
 
-  componentDidMount() {
     this.searchUnsplashAPI(
       this.props.keyword,
       this.state.page,
       this.state.perPage
     );
+  }
+
+  componentDidMount() {
+    const debouncedFunction = this.debounce(this.resizeImgArray, 1000);
+
     window.addEventListener('scroll', this.handleScroll.bind(this));
+    window.addEventListener('resize', debouncedFunction);
   }
 
   componentDidUpdate({ keyword }) {
     if (keyword !== this.props.keyword) {
       this.initState();
-      this.searchUnsplashAPI(
-        this.props.keyword,
-        this.state.page,
-        this.state.perPage
-      );
+      this.searchUnsplashAPI(this.props.keyword, 1, 9);
     }
-  }
-
-  initState() {
-    this.setState({ page: 1, perPage: 9, images: [] });
   }
 
   componentWillMount() {
     window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('resize', this.resizeImgArray);
   }
 
+  /**
+   * Init State for searching new keyword
+   */
+  initState() {
+    this.setState({
+      page: 1,
+      perPage: 9,
+      images: [],
+      originalArray: [],
+      chunkSize: 3,
+    });
+  }
+  
+  /**
+   * Listen Scroll Event for lazyloading
+   */
   handleScroll() {
     const windowHeight =
       'innerHeight' in window
@@ -74,6 +90,12 @@ class Gallery extends Component {
     }
   }
 
+  /**
+   * Search Image API
+   * @param {string} keyword 
+   * @param {numberf} page 
+   * @param {number} perPage 
+   */
   searchUnsplashAPI(keyword, page, perPage) {
     let unsplash = new Unsplash({
       accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
@@ -86,30 +108,96 @@ class Gallery extends Component {
       .then(toJson)
       .then((json) => {
         if (json.results) {
-          let searchImgArray = this.chunkArray(json.results, 3);
+          let chunkSize = this.getChunkSize();
+          let copiedArray = ArrayUtils.copyArray(json.results);
+          let images = ArrayUtils.copyArray(this.state.images);
+          let searchImgArray = ArrayUtils.chunkArray(json.results, chunkSize);
 
-          if (this.state.images.length > 0) {
-            searchImgArray = this.state.images.map((imgArr, index) => {
-              return [...imgArr, ...searchImgArray[index]];
+          if (images.length > 0) {
+            searchImgArray = images.map((imgArr, index) => {
+              if (searchImgArray[index]) {
+                return [...imgArr, ...searchImgArray[index]];
+              }
+              return [...imgArr];
             });
-            this.setState({ images: searchImgArray });
-          } else {
-            this.setState({ images: searchImgArray });
           }
+
+          this.setState({
+            images: searchImgArray,
+          });
+
+          this.setState(({ originalArray }) => {
+            let result;
+
+            if (originalArray.length < 1) {
+              result = [...copiedArray];
+            } else {
+              result = [...originalArray, ...copiedArray];
+            }
+            return { originalArray: result };
+          });
         }
       });
   }
 
-  chunkArray = (myArray, chunk_size) => {
-    let results = [];
+  /**
+   * Debounce Function
+   */
+  debounce = (func, wait) => {
+    let timeout;
 
-    while (myArray.length) {
-      results.push(myArray.splice(0, chunk_size));
-    }
+    return function excutedFunction(...args) {
+      const later = () => {
+        timeout = null;
+        func(...args);
+      };
 
-    return results;
+      clearTimeout(timeout);
+
+      timeout = setTimeout(later, wait);
+    };
   };
 
+  /**
+   * Resize Image Array
+   */
+  resizeImgArray = () => {
+    let imgArray = ArrayUtils.copyArray(this.state.originalArray);
+    let chunkSize = this.getChunkSize() * this.state.page;
+    let resizeArray = ArrayUtils.chunkArray(imgArray, chunkSize);
+
+    this.setState({
+      images: resizeArray,
+      chunkSize,
+    });
+  };
+
+  /**
+   * Get Chunk Size for Column
+   */
+  getChunkSize() {
+    const width = window.innerWidth;
+    let chunkSize;
+
+    if (width > 700 && width < 950) {
+      chunkSize = 5;
+    } else if (width >= 950) {
+      chunkSize = 3;
+    } else {
+      chunkSize = 9;
+    }
+
+    return chunkSize;
+  }
+
+  /**
+   * Click Picture
+   * @param {string} src 
+   * @param {string} user 
+   * @param {string} img 
+   * @param {function} download 
+   * @param {string} link 
+   */
   onClickPic = (src, user, img, download, link) => {
     this.setState({
       modalSrc: src.small,
@@ -117,12 +205,15 @@ class Gallery extends Component {
       modalShow: true,
       modalImg: img,
       modalDownload: download,
-      modalDownloadlink: link
+      modalDownloadlink: link,
     });
 
     document.body.classList.add('body-modal-open');
   };
 
+  /**
+   * Close Modal
+   */
   onClickCloseModal = () => {
     this.setState({ modalShow: false });
     document.body.classList.remove('body-modal-open');
@@ -130,7 +221,7 @@ class Gallery extends Component {
 
   download = (link) => {
     window.open(link, '_blank');
-  }
+  };
 
   render() {
     return (
@@ -148,7 +239,7 @@ class Gallery extends Component {
                         link={img.links.download}
                         download={this.download}
                         user={img.user}
-                        key={img.id}
+                        key={`${img.id}` + i}
                         onClick={this.onClickPic}
                       />
                     );

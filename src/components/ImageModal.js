@@ -31,7 +31,7 @@ class ImageModal extends Component {
 
   clickDownload = () => {
     this.props.modalDownload(this.props.modalDownloadlink);
-  }
+  };
 
   render() {
     return (
@@ -85,8 +85,15 @@ class ImageModal extends Component {
                 }}
               >
                 <button className="fas fa-heart"></button>
-                <button className="fas fa-plus"> Collect</button>
-                <button className="fas fa-download" onClick={this.clickDownload}> Download</button>
+                <button className="fas fa-plus">
+                  <span> Collect</span>
+                </button>
+                <button
+                  className="fas fa-download"
+                  onClick={this.clickDownload}
+                >
+                  <span> Download</span>
+                </button>
               </div>
             </div>
             <div className="image-modal-body">

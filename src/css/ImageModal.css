@@ -20,6 +20,7 @@
 
 .image-modal > div {
   width: 100%;
+  min-width: 235px;
   background-color: white;
   border-radius: 4px;
 }
@@ -50,6 +51,10 @@
 
 .image-modal-header > button {
   border-color: #d1d1d1;
+}
+
+.image-modal-header > .image-buttons-top {
+  width: auto;
 }
 
 .image-modal-body > div {

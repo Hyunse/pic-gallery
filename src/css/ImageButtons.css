@@ -4,7 +4,7 @@
 
 .image-buttons-container {
   max-width: 1280px;
-  z-index:2;
+  z-index: 2;
 }
 
 .image-shadow {
@@ -128,4 +128,24 @@
   color: white;
   font-weight: bold;
   line-height: 32px;
+}
+
+@media (max-width: 500px) {
+  .image-modal-header {
+    flex-direction: column;
+  }
+  .image-buttons-profile > div {
+    width: auto;
+  }
+
+  .image-modal-header > .image-buttons-top {
+    justify-content: flex-end;
+  }
+
+  .image-buttons-top > button:first-child {
+    margin: 0;
+  }
+  .image-buttons-top > button > span {
+    display: none;
+  }
 }
